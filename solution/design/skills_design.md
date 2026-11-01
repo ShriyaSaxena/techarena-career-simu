@@ -21,25 +21,25 @@ We use a single agent (JiuwenSwarm 0.2.4b3, `"mode": "agent"`) with three Skills
 ### career-state-assessment
 
 - **Purpose:** to decide what matters most right now, once, so the choosing Skills don't each re-derive it.
-- **Information used:** the latest `observe` result (statistics, month, event, choices), the narrative `events` text (salary lines, HR and colleague remarks, the manager's half-year feedback), warnings, the public handbook (read once), and `check_latest_logs` only when something is unclear.
-- **What it judges:** whether Health and Dignity are comfortable, getting low or low relative to their 0 to 10 range, and their trend; whether Wealth is positive; which of Skill, Network and Output is lagging; repeated or worsening risk warnings; months to the next review; the last grade and what the manager asked for; and whether Health and Dignity are spare buffer (near the top of their range).
+- **Information used:** the latest `observe` result (statistics, month, event, choices), warnings and feedback from the last action, the public handbook (read once), and `check_latest_logs` only when something is unclear.
+- **What it judges:** whether Health and Dignity are comfortable, getting low or low relative to their 0 to 10 range, and their trend; whether Wealth is positive; which of Skill, Network and Output is lagging; any warning about overwork, standing or accumulating risk; months to the next review and CurrentLevelDuration; and the last review grade and promotion outcome.
 - **Output:** four short lines (Risks, Lagging, Timing, Priority). The priority is one of `recover`, `protect`, `reduce-risk`, `prepare-review` or `grow-balanced`, taken in that order of precedence, so survival always outranks growth.
 
 ### event-decision
 
 - **Purpose:** to pick one option for a story event.
 - **Information used:** the option texts, the published effect directions, the current status and priority.
-- **Method:** estimate each option's likely effect on each statistic in words (no invented numbers), mark options with delayed costs (overwork, damaged relationships, cut corners), score the options against the priority, and break ties toward the safer option. It accepts small Health or Dignity costs when both are near their maximum, because buffer kept at the cap earns nothing.
+- **Method:** estimate each option's likely effect on each statistic in words (no invented numbers), mark options with delayed costs (overwork, damaged relationships, cut corners), score the options against the priority, and break ties toward the safer option. It never trades a large Health or Dignity loss for a small gain, treats repeated small harms as serious, and counts a likely Network loss (refusing, blaming or escalating in public) as a real cost. When options are close, it keeps the relationship.
 
 ### quarterly-planning
 
 - **Purpose:** to allocate the 3 Energy points and choose the main action.
 - **Information used:** the published Energy and main actions with their effect directions (restated briefly inside the Skill so the agent doesn't need to re-read the handbook), the priority, and the review timing.
-- **Method:** a mapping from each priority to preferred actions, plus cross-cutting rules: use all Energy; don't take Health- or Dignity-costly actions in consecutive quarters unless comfortable; don't spend recovery on a statistic already near its cap; spend 2 Energy on Defuse legacy risk after a risk warning unless Health is low; give Output the largest share when it lags or the last review asked for clearer results; invest in Skill and Network just after a review and in Output just before one.
+- **Method:** a mapping from each priority to preferred actions, plus cross-cutting rules: use all Energy; don't take Health- or Dignity-costly actions in consecutive quarters unless comfortable; don't spend Health or Mental recovery on a statistic already at its maximum (use Network maintenance or Prepare report materials instead); don't neglect any of Skill, Network or Output for several quarters; invest in Skill and Network just after a review and in Output just before one.
 
 ## 3. How the outputs combine into a decision
 
-1. `observe` returns the state, the event or phase, the choices and the narrative feedback.
+1. `observe` returns the state, the event or phase, the choices and the feedback text.
 2. `career-state-assessment` produces the status and one priority.
 3. Depending on the step type, `event-decision` or `quarterly-planning` picks a choice using that priority.
 4. The agent calls `take_action` with the choice and a one-sentence reason in `notes`.

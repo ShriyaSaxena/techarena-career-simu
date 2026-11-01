@@ -24,9 +24,7 @@ Main actions: Apply for a key project (Output +, Skill +, Network +), Report res
 ## Rules
 
 - Do not use costly actions that lower Health or Dignity in consecutive quarters unless the statistic is clearly comfortable.
-- Do not spend Energy recovering a statistic that is already near the top of its range. The gain is mostly lost at the cap, and that Energy is better spent on growth or on Defuse legacy risk.
-- If recent months brought a risk warning, spend 2 Energy on Defuse legacy risk this quarter, whatever the priority, unless Health is low.
-- Output is the statistic reviews see most directly. If it lags behind Skill and Network, or the last review asked for clearer results, give it the largest share of Energy and choose a main action that raises it.
+- Do not spend Energy on Health recovery or Mental recovery when that statistic is already at or next to its maximum, because the gain is lost at the cap. Spend that Energy on Network maintenance or Prepare report materials instead.
 - Promotion rewards sustained, balanced results, so avoid neglecting Skill, Network or Output for several quarters in a row.
 - In the quarter right after a review, it is a good time to invest in Skill and Network. In the quarter before a review, shift toward visible Output.
 

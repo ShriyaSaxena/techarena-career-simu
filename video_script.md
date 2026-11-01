@@ -15,14 +15,14 @@ The video must be English, at most 10 minutes, at normal speed, and answer the f
 - The priorities are in a fixed order, survival before growth, because failing early costs every remaining month.
 - We kept each Skill short. The agent makes about 200 decisions, so every extra line is paid for 200 times in tokens.
 
-## Q2. What did you find in the logs, and what did you change? (about 1.5 min)
+## Q2. What did you find in the logs, and what did you change? (about 2 min)
 
-- Version 1 finished all 48 months with a quantitative score of 57.38, but only reached L4. Reviews were C four times, then B four times.
-- In the replay, Health and Dignity were at 9 or 10 almost the whole game. We were over-protecting and leaving buffer unused.
-- The manager's half-year feedback kept saying "show clearer results", and Output ended at 26 while Skill was 73. Reviews see Output, and we were neglecting it.
-- The HR partner warned "the risks have piled up" 13 times, but the agent used Defuse legacy risk only 3 times. It ignored the narrative signals.
-- We also found that the agent loaded an empty template Skill we had forgotten to delete.
-- Changes in version 2: read the narrative feedback as evidence; treat full Health and Dignity as spendable buffer; don't recover a stat that's already capped; defuse risk after warnings; push Output when it lags or the manager asks for results; and remove the template Skill.
+- **v1** finished all 48 months with a quantitative score of 57.38 and reached L4. Its replay showed over-caution: Health and Dignity were at 9 or 10 almost all game, and reviews were C four times before turning to B. The agent had also loaded an empty template Skill we'd forgotten to delete.
+- So in **v2** we made it bolder: spend the Health buffer, push Output, and switch to review-preparation after any middling review.
+- That backfired. **v2 was dismissed at month 24** with two D grades and a score of 22.4. The log showed why: almost every review is middling, so the agent was locked in review-prep mode from month 6. It never ran balanced growth, and Network fell to 0. The manager's feedback then mentioned "friction" and attitude.
+- Looking across both logs, we found a shared weakness: in story events the agent kept losing Network by refusing, escalating or "protecting Output". That happened in v1 too, just less severely.
+- **v3**, our final version, goes back to v1's priority order, which is what kept it alive for 48 months, and adds two narrow rules: treat a Network loss as a real cost in events, and never spend recovery Energy on a stat that's already at its maximum.
+- Our main lesson: change one thing at a time. A single rule that shifts the priority order changes the whole game.
 
 ## Q3. Why no scripts or reference files? (about 45 s)
 
@@ -35,13 +35,13 @@ The video must be English, at most 10 minutes, at normal speed, and answer the f
 - No hard-coded thresholds, event scripts or engine internals, which the rules forbid and which wouldn't survive a hidden dataset anyway.
 - Every rule is relative: "near the top of its range", "lagging behind the other two", "a repeated warning". If ranges, events or effect sizes change, the rules still apply.
 - The agent reads the handbook at the start of every run, so if published actions change, it sees the new ones.
-- The weak point is calibration: in a much harsher environment, spending buffer could be too aggressive. The assessment re-checks every turn, though, so a falling Health switches the priority back to recover.
+- The weak point is calibration: we can't see thresholds, so we chose caution. Our v2 experiment showed that a bolder setting can fail badly. The assessment re-checks every turn, so a falling statistic switches the priority straight back.
 
 ## Q5. Agents and Skills: what do Skills add, and where do they fall short? (about 1 min)
 
 - Skills give the agent a consistent method. Without them the model reasons from scratch on each event and drifts; with them it applies the same priorities every time.
 - They also make behaviour inspectable. We could read the log, see which rule produced a choice, and fix that rule.
-- But Skills are only as good as the model's reading of them. The model sometimes followed the letter (protect Health) and missed the intent (don't waste Energy on full Health).
+- But Skills are only as good as the model's reading of them. Small wording changes have big effects. One extra condition in a priority rule took us from surviving 48 months to dismissal at month 24.
 - Skills can't give the agent information it doesn't have. With hidden thresholds, a Skill can only encode a reasonable attitude to risk, not the answer.
 
 **Close (10 s)**

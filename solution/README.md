@@ -1,4 +1,4 @@
-# career-survival-v2 (team KSL)
+# career-survival-v3 (team KSL)
 
 This is team KSL's final submission for TechArena Career Survival Agent. It runs on JiuwenSwarm 0.2.4b3 in single-agent mode (`"mode": "agent"`). The agent plays one 48-month career through the `career-emulator-engine` MCP tools, using three Skills.
 
@@ -6,7 +6,7 @@ This is team KSL's final submission for TechArena Career Survival Agent. It runs
 
 | Skill | What it decides | When it is used |
 |---|---|---|
-| `career-state-assessment` | Reads the latest state, the narrative feedback and the review timing, then sets exactly one priority: `recover`, `protect`, `reduce-risk`, `prepare-review` or `grow-balanced`. | Before every decision. |
+| `career-state-assessment` | Reads the latest state, warnings, recent outcomes and the review timing, then sets exactly one priority: `recover`, `protect`, `reduce-risk`, `prepare-review` or `grow-balanced`. | Before every decision. |
 | `event-decision` | Picks an option for a monthly story event. It estimates each option's likely effects, flags delayed costs, and scores the options against the current priority. | When the current step is a story event. |
 | `quarterly-planning` | Allocates the 3 quarterly Energy points and chooses the quarterly main action, based on the priority and the time to the next review. | When the current step is the quarterly phase. |
 
@@ -14,8 +14,9 @@ Assessment and choice are kept apart, so each Skill stays short and does one job
 
 ## Design principles
 
-- Survival comes first, but Health and Dignity at their maximum are a buffer to spend, not a target.
-- Narrative warnings (HR remarks, manager feedback) count as evidence of hidden risk and weak standing.
+- Survival comes first: when Health or Dignity is low or falling, or a warning appears, recovery outranks growth.
+- Options with delayed costs (overwork, damaged relationships, cut corners) are treated with suspicion. A likely Network loss counts as a real cost.
+- Energy is not wasted on recovering a statistic that is already at its maximum.
 - Promotion needs balanced Skill, Network and Output, and reviews see Output most directly.
 - There are no hard-coded thresholds, event scripts or engine internals. Each judgement is made relative to a statistic's published range and to feedback from the run.
 
