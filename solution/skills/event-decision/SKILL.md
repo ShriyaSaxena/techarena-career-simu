@@ -22,6 +22,7 @@ Use this Skill when `observe` shows a story event with choices. Use the status a
 ## Rules
 
 - Never trade a large loss in Health or Dignity for a small gain elsewhere.
+- When Health and Dignity are both near the top of their range, a small cost to one of them is acceptable for a clear gain in Output, Skill or Network. Keeping them at the maximum earns nothing extra.
 - Do not try to guess hidden formulas or follow event-specific scripts. Reason from the option text, the current state and the feedback received.
 - Treat repeated small harms as serious, because they accumulate.
 
